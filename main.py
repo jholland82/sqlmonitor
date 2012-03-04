@@ -1,8 +1,6 @@
-import colorama
 import curses
 import os
 import time
-from colorama import Fore, Back, Style
 
 import display
 
@@ -14,10 +12,8 @@ class App():
 
     def main(self):
         window = display.Window()
-        colorama.init(autoreset=True)
-        print Fore.BLUE + "Testing"
 
-
+# run the check to see if we are running standalone or as an import
 if __name__ == "__main__":
     app = App()
     app.main()

@@ -1,5 +1,6 @@
 import curses
 
+#
 class Window():
     def __init__(self):
         self.initscr()
@@ -18,3 +19,7 @@ class Window():
     def endwin(self):
         curses.echo()
         curses.endwin()
+
+    def define_pairs(self):
+        curses.start_color()
+        curses.init_pair(1, curses.COLOR_RED, curses.COLOR_BLACK)
