@@ -3,6 +3,7 @@ import string
 from os import environ
 
 LINE_Y = 3          # Default Y location to start server listing
+freetds = "FreeTDS"
 
 class Window():
     def __init__(self):
@@ -44,7 +45,6 @@ class Window():
 
     def check_servers(self):
         self.default_refresh()
-        line_y = LINE_Y
         db_list = []
         file = open("db.config")
         for line in file:
@@ -55,7 +55,18 @@ class Window():
                 db_data = line.strip().split(',')
                 db_list.append(db_data)
         file.close()
+        self.loop_servers(db_list)
         return
+
+    def loop_servers(self, db_list):
+        line_y = LINE_Y
+        for db in db_list:
+            try:
+                conn = pyodbc.connect('DRIVER=%s;SERVER=%s;DATABASE=%s;UID=%s;PWD=%s;TDS_VERSION=%s;PORT=%s;' 
+                        % (freetds, db[0], db[1], db[2], db[3], db[4], db[5]))
+            except:
+                self.screen.addstr(line_y, 0, "Could not connect to %s" %
+                        (db[0]), curses.color_pair(1))
 
     def define_pairs(self):
         curses.start_color()
